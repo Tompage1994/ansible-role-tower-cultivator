@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: tower-cultivator
+  role_name: tower_cultivator
   author: Dan Hawker
   description: Tower Cultivator - Simple, automated seeding of Ansible Tower
   company: None
