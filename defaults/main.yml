@@ -6,15 +6,8 @@ cultivator_virtualenv_path: "/opt/cultivator"
 
 # Base Packages
 cultivator_base_packages:
-#    - python-pip
-    - git
-    - pyOpenSSL
-    - python-netaddr
-    - python-six
-    #- python2-boto3
-    #- python-click
-    - python-httplib2
     - python-virtualenv
+    - python-setuptools
 
 # Packages to install with pip
 cultivator_pip_packages:
@@ -23,9 +16,7 @@ cultivator_pip_packages:
 
 # Dictionary of Tower orgs to seed.
 cultivator_tower_orgs:
-    - { name: "Dark Matter", description: "Dark Matter Org" }
-    - { name: "Angel Dust", description: "Angel Dust Org"}
-
+    - { name: "default", description: "Default Organisation" }
 
 # URL of the Tower API instance/host
 cultivator_tower_server: https://my-tower.example.com

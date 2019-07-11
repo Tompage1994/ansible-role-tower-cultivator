@@ -1,38 +1,85 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Ansible Role to Seed Ansible Tower with some simple initial settings.
+
+NOTE: Currently only Organisations are seeded, but more objects will be added soon.
+
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The role heavily utilises the existing `tower_*` Ansible modules, which in turn leverage the `tower-cli`. This role installs `tower-cli` using the `pip` ansible module, into a Python Virtualenv on the target system (I usually target one of the Tower hosts).
+
+The role installs all pre-requisites on the target (eg `python-virtualenv` and `python-setuptools`) to complete the above tasks, but it does require access to the appropriate RHEL channels and access to PyPi.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Available variables are listed below, along with default values (see defaults/main.yml):
+
+    # VirtualEnv that Cultivator uses as a working/install dir
+    cultivator_virtualenv_path: "/opt/cultivator"
+
+    # Base Packages
+    cultivator_base_packages:
+        - python-virtualenv
+        - python-setuptools
+
+    # Packages to install with pip
+    cultivator_pip_packages:
+        - ansible-tower-cli
+
+    # Dictionary of Tower orgs to seed.
+    cultivator_tower_orgs:
+        - { name: "default", description: "Default Organisation" }
+
+
+    # URL of the Tower API instance/host
+    cultivator_tower_server: https://my-tower.example.com
+
+    # User to login to Tower
+    cultivator_tower_username: admin
+
+    # Password for the user above
+    cultivator_tower_password: towerpassword
+
+    # Should certs be validated? Set false if using self-signed certs
+    cultivator_tower_validate_certs: true
+
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+    `tower_*` - standard modules included with Ansible >= 2.3
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+---
+# Playbook to seed Ansible Tower
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+- name: "[Ansible Tower] Cultivate Tower"
+  hosts: tower
+  gather_facts: no
+
+  vars:
+    cultivator_tower_server: https://tower.example.com
+    cultivator_tower_username: myuser
+    cultivator_tower_password: mysecurepassword
+
+  roles:
+  - role: tower-cultivator
+
 
 License
 -------
 
-BSD
+MIT
+
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Dan Hawker [Github](https://github.com/danhawker)
