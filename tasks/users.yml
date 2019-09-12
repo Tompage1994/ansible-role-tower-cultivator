@@ -1,24 +1,28 @@
 ---
-# tasks file for ansible-role-cultivator:orgs.yml
+# tasks file for ansible-role-cultivator:users.yml
 
 #
 # -----------------------------------------------------------------------------
-# Orgs Tasks
+# User Tasks
 # -----------------------------------------------------------------------------
-# Any Organisation Tasks
+# Any User Tasks
 #
 
-# Create Orgs
-- name: "[Cultivator - Orgs] Create Organisations"
-  tower_organization:
-    name: "{{ item.name }}"
-    description: "{{ item.description }}"
+# Create Users
+- name: "[Cultivator - Users] Create Users"
+  tower_user:
+    username: "{{ item.username }}"
+    first_name: "{{ item.first_name }}"
+    last_name: "{{ item.last_name }}"
+    email: "{{ item.email }}"
+    password: "{{ item.password }}"
+    user_type: "{{ item.user_type }}"
     state: present
     tower_host: "{{ cultivator_tower_server }}"
     tower_username: "{{ cultivator_tower_username }}"
     tower_password: "{{ cultivator_tower_password }}"
     validate_certs: "{{ cultivator_tower_validate_certs }}"
-  loop: "{{ cultivator_tower_objects.organisations }}"
+  loop: "{{ cultivator_tower_objects.organisations | dict2items | subelements('users') }}"
   environment:
     PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
     PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
