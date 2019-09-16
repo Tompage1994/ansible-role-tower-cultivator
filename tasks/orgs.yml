@@ -18,7 +18,7 @@
     tower_username: "{{ cultivator_tower_username }}"
     tower_password: "{{ cultivator_tower_password }}"
     validate_certs: "{{ cultivator_tower_validate_certs }}"
-  loop: "{{ cultivator_tower_objects.organisations }}"
+  loop: "{{ cultivator_tower_objects | dict2items | subelements('organisations') }}"
   environment:
     PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
     PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
