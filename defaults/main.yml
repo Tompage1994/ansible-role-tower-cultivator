@@ -61,3 +61,4 @@ cultivator_tower_objects:
           job_type: run
           playbook: ping.yml
           project: "Prefect"
+          inventory: "AWS"

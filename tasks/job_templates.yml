@@ -15,6 +15,7 @@
     job_type: "{{ item.1.job_type }}"
     playbook: "{{ item.1.playbook }}"
     project: "{{ item.1.project }}"
+    inventory: "{{ item.1.inventory }}"
     state: present
     tower_host: "{{ cultivator_tower_server }}"
     tower_username: "{{ cultivator_tower_username }}"
