@@ -59,6 +59,6 @@ cultivator_tower_objects:
       job_templates:
         - name: "Ping"
           job_type: run
-          playbook: ping.yml
+          playbook: "playbooks/ping.yml"
           project: "Prefect"
           inventory: "AWS"
