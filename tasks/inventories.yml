@@ -13,7 +13,7 @@
   tower_inventory:
     name: "{{ item.1.name }}"
     description: "{{ item.1.description }}"
-    organization: "{{ item.name }}"
+    organization: "{{ item.0.name }}"
     state: present
     tower_host: "{{ cultivator_tower_server }}"
     tower_username: "{{ cultivator_tower_username }}"

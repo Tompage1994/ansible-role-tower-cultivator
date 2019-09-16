@@ -13,7 +13,7 @@
   tower_project:
     name: "{{ item.1.name }}"
     description: "{{ item.1.description }}"
-    organization: "{{ item.name }}"
+    organization: "{{ item.0.name }}"
     scm_url: "{{ item.1.scm_url }}"
     scm_type: "{{ item.1.scm_type }}"
     state: present
