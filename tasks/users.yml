@@ -11,18 +11,25 @@
 # Create Users
 - name: "[Cultivator - Users] Create Users"
   tower_user:
-    username: "{{ item.username }}"
-    first_name: "{{ item.first_name }}"
-    last_name: "{{ item.last_name }}"
-    email: "{{ item.email }}"
-    password: "{{ item.password }}"
-    user_type: "{{ item.user_type }}"
+    username: "{{ item.1.username }}"
+    first_name: "{{ item.1.first_name }}"
+    last_name: "{{ item.1.last_name }}"
+    email: "{{ item.1.email }}"
+    password: "{{ item.1.password }}"
+    # FIXME: For whatever reason although the code below works correctly
+    # users in Tower default to regular users.
+    # You can fix this using tower-cli directly, just not here.
+    # Sense a bug in the module.
+    # superuser: "{{ true if item.1.user_type == 'superuser' else false }}"
+    # auditor: "{{ true if item.1.user_type == 'auditor' else false }}"
     state: present
     tower_host: "{{ cultivator_tower_server }}"
     tower_username: "{{ cultivator_tower_username }}"
     tower_password: "{{ cultivator_tower_password }}"
     validate_certs: "{{ cultivator_tower_validate_certs }}"
-  loop: "{{ cultivator_tower_objects.organisations | dict2items | subelements('users') }}"
+  loop: "{{ cultivator_tower_objects.organisations | subelements('users') }}"
   environment:
     PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
     PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
+  vars:
+    ansible_python_interpreter: '{{ cultivator_virtualenv_path }}/bin/python'

@@ -1,24 +1,25 @@
 ---
-# tasks file for ansible-role-cultivator:orgs.yml
+# tasks file for ansible-role-cultivator:inventories.yml
 
 #
 # -----------------------------------------------------------------------------
-# Orgs Tasks
+# Inventory Tasks
 # -----------------------------------------------------------------------------
-# Any Organisation Tasks
+# 
 #
 
-# Create Orgs
-- name: "[Cultivator - Orgs] Create Organisations"
-  tower_organization:
-    name: "{{ item.name }}"
-    description: "{{ item.description }}"
+# Create Inventories
+- name: "[Cultivator - Inventories] Create Inventories"
+  tower_inventory:
+    name: "{{ item.1.name }}"
+    description: "{{ item.1.description }}"
+    organization: "{{ item.name }}"
     state: present
     tower_host: "{{ cultivator_tower_server }}"
     tower_username: "{{ cultivator_tower_username }}"
     tower_password: "{{ cultivator_tower_password }}"
     validate_certs: "{{ cultivator_tower_validate_certs }}"
-  loop: "{{ cultivator_tower_objects.organisations }}"
+  loop: "{{ cultivator_tower_objects.organisations | subelements('inventories') }}"
   environment:
     PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
     PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'

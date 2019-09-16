@@ -1,24 +1,26 @@
 ---
-# tasks file for ansible-role-cultivator:orgs.yml
+# tasks file for ansible-role-cultivator:job_templates.yml
 
 #
 # -----------------------------------------------------------------------------
-# Orgs Tasks
+# Job Template Tasks
 # -----------------------------------------------------------------------------
-# Any Organisation Tasks
+# 
 #
 
-# Create Orgs
-- name: "[Cultivator - Orgs] Create Organisations"
-  tower_organization:
-    name: "{{ item.name }}"
-    description: "{{ item.description }}"
+# Create Job Temnplates
+- name: "[Cultivator - Job Templates] Create Job Templates"
+  tower_job_template:
+    name: "{{ item.1.name }}"
+    job_type: "{{ item.1.job_type }}"
+    playbook: "{{ item.1.playbook }}"
+    project: "{{ item.1.project }}"
     state: present
     tower_host: "{{ cultivator_tower_server }}"
     tower_username: "{{ cultivator_tower_username }}"
     tower_password: "{{ cultivator_tower_password }}"
     validate_certs: "{{ cultivator_tower_validate_certs }}"
-  loop: "{{ cultivator_tower_objects.organisations }}"
+  loop: "{{ cultivator_tower_objects.organisations | subelements('job_templates') }}"
   environment:
     PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
     PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
