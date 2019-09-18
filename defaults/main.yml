@@ -26,10 +26,6 @@ cultivator_tower_password: towerpassword
 # Should certs be validated? Set false if using self-signed certs
 cultivator_tower_validate_certs: true
 
-# Dictionary of Tower orgs to seed.
-cultivator_tower_orgs:
-    - { name: "default", description: "Default Organisation" }
-
 # Dictionary of Tower Objects to seed.
 cultivator_tower_objects:
   organisations:

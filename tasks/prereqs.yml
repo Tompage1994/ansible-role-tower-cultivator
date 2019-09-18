@@ -15,6 +15,7 @@
     state: present
   become: true
   tags: [packages]
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version == '7'
 
 # Same, but on RHEL RHSCL is enabled by Tower, so disable
 - name: "[Cultivator - Pre-Reqs] Install Base Packages for Tower CLI"
@@ -24,7 +25,7 @@
     disablerepo: "rhel-server-rhscl-7-rpms"
   become: true
   tags: [packages]
-  when: ansible_distribution == "RedHat" and ansible_distribution_version == "7"
+  when: ansible_distribution == 'RedHat' and ansible_distribution_version == '7'
 
 # Create Cultivator VirtualEnv FilePath
 - name: "[Cultivator - VirtualEnv] Create VirtualEnv Path"
