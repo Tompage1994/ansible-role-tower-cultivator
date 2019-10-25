@@ -145,6 +145,12 @@ cultivator_tower_objects:
       inventories:
         - name: "AWS"
           description: "AWS"
+      inventoriey_source:
+        - name: "AWS-source"
+          description: "AWS source"
+          inventory: "AWS"
+          project: "project_1"
+          path: "inventory/aws.yml"
       job_templates:
         - name: "Ping"
           job_type: run

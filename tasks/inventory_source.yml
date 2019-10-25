@@ -1,0 +1,30 @@
+---
+# tasks file for ansible-role-cultivator:inventoriey_source.yml
+
+#
+# -----------------------------------------------------------------------------
+# Inventory Source Tasks
+# -----------------------------------------------------------------------------
+# 
+#
+
+# Create Inventories
+- name: "[Cultivator - Inventories] Create Inventories"
+  tower_inventory:
+    name: "{{ item.1.name }}"
+    description: "{{ item.1.description }}"
+    inventory: "{{ item.1.inventory }}"
+    source: "scm"
+    source_project: "{{ item.1.project }}"
+    source_path: "{{ item.1.path }}"
+    state: present
+    tower_host: "{{ cultivator_tower_server }}"
+    tower_username: "{{ cultivator_tower_username }}"
+    tower_password: "{{ cultivator_tower_password }}"
+    validate_certs: "{{ cultivator_tower_validate_certs }}"
+  loop: "{{ cultivator_tower_objects.organisations | subelements('inventories') }}"
+  environment:
+    PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
+    PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
+  vars:
+    ansible_python_interpreter: '{{ cultivator_virtualenv_path }}/bin/python'
