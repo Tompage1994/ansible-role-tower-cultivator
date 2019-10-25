@@ -1,5 +1,5 @@
 ---
-# tasks file for ansible-role-cultivator:inventoriey_source.yml
+# tasks file for ansible-role-cultivator:inventory_source.yml
 
 #
 # -----------------------------------------------------------------------------
@@ -8,9 +8,9 @@
 # 
 #
 
-# Create Inventories
-- name: "[Cultivator - Inventories] Create Inventories"
-  tower_inventory:
+# Create Inventoy Source
+- name: "[Cultivator - Inventory Source] Create Inventory Source"
+  tower_inventory_source:
     name: "{{ item.1.name }}"
     description: "{{ item.1.description }}"
     inventory: "{{ item.1.inventory }}"
@@ -22,7 +22,7 @@
     tower_username: "{{ cultivator_tower_username }}"
     tower_password: "{{ cultivator_tower_password }}"
     validate_certs: "{{ cultivator_tower_validate_certs }}"
-  loop: "{{ cultivator_tower_objects.organisations | subelements('inventories') }}"
+  loop: "{{ cultivator_tower_objects.organisations | subelements('inventory_source') }}"
   environment:
     PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
     PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
