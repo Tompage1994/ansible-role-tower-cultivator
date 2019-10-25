@@ -1,0 +1,28 @@
+---
+# tasks file for ansible-role-cultivator:workflow_templates.yml
+
+#
+# -----------------------------------------------------------------------------
+# Workflow Tasks
+# -----------------------------------------------------------------------------
+# 
+#
+
+# Create Job Temnplates
+- name: "[Cultivator - Workflow Templates] Create Workflow Templates"
+  tower_workflow_template:
+    name: "{{ item.1.name }}"
+    description: "{{ item.1.description }}"
+    organization: "{{ item.0.name }}"
+    schema: "{{ item.1.schema }}"
+    state: present
+    tower_host: "{{ cultivator_tower_server }}"
+    tower_username: "{{ cultivator_tower_username }}"
+    tower_password: "{{ cultivator_tower_password }}"
+    validate_certs: "{{ cultivator_tower_validate_certs }}"
+  loop: "{{ cultivator_tower_objects.organisations | subelements('workflow_templates') }}"
+  environment:
+    PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
+    PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
+  vars:
+    ansible_python_interpreter: '{{ cultivator_virtualenv_path }}/bin/python'

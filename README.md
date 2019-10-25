@@ -151,6 +151,13 @@ cultivator_tower_objects:
           playbook: "playbooks/ping.yml"
           project: "Prefect"
           inventory: "AWS"
+      workflow_templates:
+        - name: "workflow_1"
+          description: "A test workflow"
+          schema:
+            - job_template: "Ping"
+              success_nodes:
+              - job_template: "Pong"
 ```
 
 
