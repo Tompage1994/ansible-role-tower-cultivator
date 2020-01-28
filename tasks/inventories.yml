@@ -19,6 +19,7 @@
     tower_username: "{{ cultivator_tower_username }}"
     tower_password: "{{ cultivator_tower_password }}"
     validate_certs: "{{ cultivator_tower_validate_certs }}"
+    variables: "{{ item.1.variables | default(omit) }}"
   loop: "{{ cultivator_tower_objects.organisations | subelements('inventories') }}"
   environment:
     PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
