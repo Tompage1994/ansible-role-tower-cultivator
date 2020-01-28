@@ -1,0 +1,35 @@
+---
+# tasks file for ansible-role-cultivator:inventory_source.yml
+
+#
+# -----------------------------------------------------------------------------
+# Inventory Source Tasks
+# -----------------------------------------------------------------------------
+#
+#
+
+# Create Inventoy Source
+- name: "[Cultivator - Inventory Source] Create Inventory Source"
+  tower_inventory_source:
+    name: "{{ item.1.name }}"
+    description: "{{ item.1.description }}"
+    inventory: "{{ item.1.inventory }}"
+    source: "{{ item.1.source }}"
+    update_on_launch: "{{ item.1.update_on_launch | default(omit) }}"
+    overwrite: "{{ item.1.overwrite | default(omit) }}"
+    instance_filters: "{{ item.1.instance_filters | default(omit) }}"
+    source_project: "{{ item.1.source_project | default(omit) }}"
+    source_path: "{{ item.1.source_path | default(omit) }}"
+    source_regions: "{{ item.1.source_regions | default(omit) }}"
+    source_vars: "{{ item.1.source_vars | default(omit) }}"
+    state: present
+    tower_host: "{{ cultivator_tower_server }}"
+    tower_username: "{{ cultivator_tower_username }}"
+    tower_password: "{{ cultivator_tower_password }}"
+    validate_certs: "{{ cultivator_tower_validate_certs }}"
+  loop: "{{ cultivator_tower_objects.organisations | subelements('inventory_sources') }}"
+  environment:
+    PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
+    PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
+  vars:
+    ansible_python_interpreter: '{{ cultivator_virtualenv_path }}/bin/python'

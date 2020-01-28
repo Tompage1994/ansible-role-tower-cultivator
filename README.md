@@ -137,6 +137,32 @@ cultivator_tower_objects:
           email: "joe.bloggs@example.com"
           password: "password"
           user_type: "auditor"
+      credential_type:
+        - name: demotype
+          inputs:
+            fields:
+              - id: host
+                type: string
+                label: Hostname
+              - id: password
+                type: string
+                label: Password
+                secret: true
+            required:
+              - host
+              - password
+          injectors: "{{ lookup('file', '{{ var_location }}/demo_extra_vars.json') }}"
+          # See Ansible Tower docs for example injectors
+      credential:
+        - name: "cred1"
+          kind: demotype
+          inputs:
+            host: demo.example.com
+            password: password
+        - name: "cred2"
+          kind: ssh
+          username: admin
+          password: password
       projects:
         - name: "Prefect"
           description: "Ansible Playground Manager"
@@ -145,7 +171,7 @@ cultivator_tower_objects:
       inventories:
         - name: "AWS"
           description: "AWS"
-      inventoriey_source:
+      inventory_sources:
         - name: "AWS-source"
           description: "AWS source"
           inventory: "AWS"
@@ -157,6 +183,11 @@ cultivator_tower_objects:
           playbook: "playbooks/ping.yml"
           project: "Prefect"
           inventory: "AWS"
+      job_template-credentials:
+        - job_template: "Ping"
+          credential: "cred1"
+        - job_template: "Ping"
+          credential: "cred2"
       workflow_templates:
         - name: "workflow_1"
           description: "A test workflow"

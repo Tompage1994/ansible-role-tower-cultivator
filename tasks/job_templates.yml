@@ -5,7 +5,7 @@
 # -----------------------------------------------------------------------------
 # Job Template Tasks
 # -----------------------------------------------------------------------------
-# 
+#
 #
 
 # Create Job Temnplates
@@ -21,6 +21,7 @@
     tower_username: "{{ cultivator_tower_username }}"
     tower_password: "{{ cultivator_tower_password }}"
     validate_certs: "{{ cultivator_tower_validate_certs }}"
+    credential: "{{ item.1.credential }}"
   loop: "{{ cultivator_tower_objects.organisations | subelements('job_templates') }}"
   environment:
     PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'

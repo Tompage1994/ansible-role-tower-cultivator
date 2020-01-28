@@ -5,7 +5,7 @@
 # -----------------------------------------------------------------------------
 # Project Tasks
 # -----------------------------------------------------------------------------
-# 
+#
 #
 
 # Create Projects
@@ -16,6 +16,7 @@
     organization: "{{ item.0.name }}"
     scm_url: "{{ item.1.scm_url }}"
     scm_type: "{{ item.1.scm_type }}"
+    scm_credential: "{{ item.1.scm_credential | default(omit) }}"
     state: present
     tower_host: "{{ cultivator_tower_server }}"
     tower_username: "{{ cultivator_tower_username }}"
